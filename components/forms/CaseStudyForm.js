@@ -19,7 +19,7 @@ export default function CaseStudyForm() {
         <input type="text" id="name" name="name" required />
   
         <label htmlFor="description">Descripción</label>
-       <textarea name='descriotion' rows={2}></textarea>
+       <textarea name='description' rows={2}></textarea>
 
         <label htmlFor="commitDate">Fecha de inicio</label>
         <input type='date' id="commitDate" name="commitDate" required />

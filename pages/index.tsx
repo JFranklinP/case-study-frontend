@@ -1,7 +1,7 @@
 
 import { Inter } from 'next/font/google'
 import Head from 'next/head'
-
+import ContextForm from  "../components/forms/ContextForm"
 import Link from 'next/link'
 import CaseStudyForm from "../components/forms/CaseStudyForm"
 import { MainLayout } from '../components/layouts/MainLayout'
@@ -14,11 +14,11 @@ export default function Home() {
 
 <h1>Sistema para el diseño de estudios de caso</h1>
 
-<CaseStudyForm/>
+<ContextForm/>
 
 <h1 className={'title'}>
  {/*Ir a <a href='/about'>About</a>*/}
- Ir a<Link  href='/form'>About </Link>
+ Ir a<Link  href='/context/ContextList'>About </Link>
 </h1>
 
 <p className={'description'}>
