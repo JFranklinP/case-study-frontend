@@ -1,17 +1,24 @@
 import axios from 'axios'
 import React from 'react'
+import Link from "next/link";
+import {MainLayout} from '../../components/layouts/MainLayout'
 
- function ContextList({contexts}) {
+  function ContextList({contexts}) {
   return (
-    <div>
-        {contexts.map(contexts =>(
-            <div key={contexts.id}>
-                <h1>{contexts.name}</h1>
-                <p>{contexts.description}</p>
+    <MainLayout>
+    
+        {contexts.map(context =>(
+            <Link href={'/context/${context.id}'} key={context.id}> 
+            
+            <div className='border border-gray-200 shadow-md p-6' >
+                <h1>{context.name}</h1>
+                <p>{context.description}</p>
 
             </div>
+            </Link>
         ))}
-    </div>
+    
+    </MainLayout>
   );
 }
  export const getServerSideProps = async context =>{
