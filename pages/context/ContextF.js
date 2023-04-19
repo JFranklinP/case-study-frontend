@@ -5,7 +5,10 @@ import ContextForm from '../../components/forms/ContextForm'
 export default function ContextFPage() {
   return (
     <MainLayout>
-        <ContextForm/>
+      <div className='grid place-items-center h-5/6'>
+      <ContextForm/>
+      </div>
+
     </MainLayout>
      
   )

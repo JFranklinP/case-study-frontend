@@ -40,14 +40,20 @@ export default function CaseStudyForm() {
   return (
     <div className="w-full max-w-xs">
       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <label htmlFor="name">Nombre</label>
-        <input type="text" id="name" name="name" required onChange={handleChange} className="shadow border rounded py-2 px-3 text-gray-700" value={context.name}/>
 
-        <label htmlFor="description">Descripción</label>
+        <div className="mb-4">
+        <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">Nombre</label>
+        <input type="text" id="name" name="name" required onChange={handleChange} className="shadow appearance-none w-full  border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={context.name}/>
+        </div>
+       
+
+        <div className="mb-4">
+        <label htmlFor="description" className="block text-gray-700 text-sm font-bold mb-2">Descripción</label>
         <textarea
          name="description" rows={2} onChange={handleChange} className="shadow border rounded py-2 px-3 text-gray-700" value={context.description}>
          </textarea>
-        <br></br>
+        </div>
+        
         <button type="submit" className="bg-blue-500 hover:bg-blue-700 py-2 px4 rounded focus:outline-none focus:shadow-outline font-bold text-white">
           {
             router.query.id ? 'Actualizar' : 'Añadir'

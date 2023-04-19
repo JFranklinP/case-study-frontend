@@ -2,22 +2,27 @@ import axios from 'axios'
 import React from 'react'
 import Link from "next/link";
 import {MainLayout} from '../../components/layouts/MainLayout'
+import ContextCard from '../../components/cards/ContextCard';
 
   function ContextList({contexts}) {
+
+    const renderContexts = () =>{
+        if (contexts.length === 0) return <h1 text-center text-bold> No hay contextos</h1>;
+    
+    return(
+        contexts.map(context =>(
+            <ContextCard key={context.id} context={context} />
+         ))
+     
+    )
+    };
   return (
     <MainLayout>
     
-        {contexts.map(context =>(
-            <Link href={'/context/${context.id}'} key={context.id}> 
-            
-            <div className='border border-gray-200 shadow-md p-6' >
-                <h1>{context.name}</h1>
-                <p>{context.description}</p>
+        <div className='grid gap-4 grid-cols-1 md: grid-cols-2' >
+        {renderContexts()}
+        </div>
 
-            </div>
-            </Link>
-        ))}
-    
     </MainLayout>
   );
 }
