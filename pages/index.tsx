@@ -3,7 +3,6 @@ import { Inter } from 'next/font/google'
 import Head from 'next/head'
 import ContextForm from  "../components/forms/ContextForm"
 import Link from 'next/link'
-import CaseStudyForm from "../components/forms/CaseStudyForm"
 import { MainLayout } from '../components/layouts/MainLayout'
 
 const inter = Inter({ subsets: ['latin'] })
