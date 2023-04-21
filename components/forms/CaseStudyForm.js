@@ -6,7 +6,7 @@ const handleSubmit = e =>{
     console.log("caso creado");
 }
 
-export default function CaseStudyForm() {
+export  function CaseStudyForm() {
     const handleSubmit = async (e) =>{
         e.preventDefault();
         console.log("caso creado");

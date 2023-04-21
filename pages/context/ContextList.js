@@ -13,6 +13,7 @@ import ContextCard from '../../components/cards/ContextCard';
         contexts.map(context =>(
             <ContextCard key={context.id} context={context} />
          ))
+         
      
     )
     };

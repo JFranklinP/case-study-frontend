@@ -14,26 +14,28 @@ export default function CaseStudyForm() {
     e.preventDefault();
 
     if (router.query.id){
-      const res = await axios.put("http://localhost:3000/api/context"+ router.query.id, context);
+      const res = await axios.put("http://localhost:3000/api/context/"+ router.query.id, context);
     }
     else{
-      const res = await axios.post("http://localhost:3000/api/context", context);
-    }
+      const res = await axios.post("http://localhost:3000/api/context/", context);
+}
     router.push('context/ContextList')
   };
 
   const handleChange = e => {
-    console.log(e.target.name, e.target.description);
-    setContext({ ...context })
+    
+    console.log(e.target.name, );
+    const {name,value} = e.target;
+    setContext({ ...context,[name]:value})
   }
   useEffect (() =>{
 
     const getContext = async () =>{
-    const {data} = await axios.get('http://localhost:3000/api/context/' + router.query.id)
+    const {data} = await axios.get('http://localhost:3000/api/context/ ${ router.query.id}')
      setContext(data)   
   }
     if (router.query.id){
-      getContext(router.query.id)
+      getContext()
     }
   },[])
 
@@ -43,14 +45,14 @@ export default function CaseStudyForm() {
 
         <div className="mb-4">
         <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">Nombre</label>
-        <input type="text" id="name" name="name" required onChange={handleChange} className="shadow appearance-none w-full  border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={context.name}/>
+        <input type="text" id="name" name="name" required onChange={handleChange} className="shadow appearance-none w-full  border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
         </div>
        
 
         <div className="mb-4">
         <label htmlFor="description" className="block text-gray-700 text-sm font-bold mb-2">Descripción</label>
         <textarea
-         name="description" rows={2} onChange={handleChange} className="shadow border rounded py-2 px-3 text-gray-700" value={context.description}>
+         name="description" rows={2} onChange={handleChange} className="shadow border rounded py-2 px-3 text-gray-700" >
          </textarea>
         </div>
         

@@ -14,6 +14,8 @@ export default function Home() {
 
 <h1>Sistema para el diseño de estudios de caso</h1>
 
+<Link href={"/context/ContextF"}> Formulario</Link>
+
 <ContextForm/>
 
 <h1 className={'title'}>
