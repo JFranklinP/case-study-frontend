@@ -1,4 +1,4 @@
-import Form from '../../../components/forms/ContextForm'
+import Form from '../../../components/forms/AnalisysUnitForm'
 
 
 export default Form

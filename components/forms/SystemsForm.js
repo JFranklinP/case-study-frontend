@@ -3,10 +3,10 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import {toast} from "react-toastify"
 
-export  function ContextForm() {
+export  function SystemForm() {
   const router = useRouter();
 
-  const [systems, setContext] = useState({
+  const [systems, setSystem] = useState({
     name: "",
     description: "",
   });
@@ -19,15 +19,15 @@ export  function ContextForm() {
           "http://localhost:3000/api/systems/" + router.query.id,
           systems
         );
-        toast.success("Contexto Actualizado");
-        router.push("../ContextList");
+        toast.success("Systema Actualizado");
+        router.push("../SystemList");
       } else {
         const res = await axios.post(
           "http://localhost:3000/api/systems/",
           systems
         );
-        toast.success("Contexto Creado");
-        router.push("/systems/ContextList");
+        toast.success("Systema Creado");
+        router.push("/systems/SystemList");
       }
     }catch(error){
       toast.error(error.response.data.message);
@@ -38,17 +38,17 @@ export  function ContextForm() {
   const handleChange = (e) => {
     console.log(e.target.name);
     const { name, value } = e.target;
-    setContext({ ...systems, [name]: value });
+    setSystem({ ...systems, [name]: value });
   };
   useEffect(() => {
-    const getContext = async () => {
+    const getSystem = async () => {
       const { data } = await axios.get(
         "http://localhost:3000/api/systems/ " + router.query.id
       );
-      setContext({ name: data.name, description: data.description });
+      setSystem({ name: data.name, description: data.description });
     };
     if (router.query.id) {
-      getContext();
+      getSystem();
     }
   }, []);
 
