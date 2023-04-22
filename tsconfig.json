@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "components/layouts/MainLayout.jsx"  ],
+, "components/layouts/MainLayout.jsx", "pages/context/ContextF.js"  ],
   "exclude": [
     "node_modules"
   ]

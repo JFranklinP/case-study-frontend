@@ -5,8 +5,8 @@ interface Props {
     text: string;
     href: string;
 }
-export const ActiveLink: FC <Props>= ({text,href}) => {
-    return ( 
-    <Link  href={href}>{text}</Link>
-   );
+export const ActiveLink: FC<Props> = ({ text, href }) => {
+    return (
+        <Link href={href}>{text}</Link>
+    );
 };

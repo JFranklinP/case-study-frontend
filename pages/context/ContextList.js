@@ -5,6 +5,8 @@ import { MainLayout } from "../../components/layouts/MainLayout";
 import ContextCard from "../../components/cards/ContextCard";
 
 function ContextList({ contexts }) {
+ 
+  
   const renderContexts = () => {
     if (contexts.length === 0)
       return (
@@ -20,6 +22,9 @@ function ContextList({ contexts }) {
   };
   return (
     <MainLayout>
+       <div className="bg-blue-500 hover:bg-blue-700 mg-2 p-6 font-bold ">
+    <Link href="/context/ContextF">Nuevo</Link>
+  </div>
       <div className="grid gap-4 grid-cols-1 md: grid-cols-2">
         {renderContexts()}
       </div>

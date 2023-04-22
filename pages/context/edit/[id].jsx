@@ -1,8 +1,4 @@
-import Form from '../ContextF'
+import Form from '../../../components/forms/ContextForm'
 
- function EditPage() {
-  return (
-    <div>[id]</div>
-  )
-}
+
 export default Form
