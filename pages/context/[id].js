@@ -2,11 +2,19 @@ import React from "react";
 import { MainLayout } from "../../components/layouts/MainLayout";
 import axios from "axios";
 import { useRouter } from "next/router";
+import {toast} from "react-toastify"
+
+
 function ContextView({ context }) {
   const router = useRouter();
   const handleDelete = async (id) => {
-    const res = await axios.delete("http://localhost:3000/api/context/" + id);
+    try{
+      const res = await axios.delete("http://localhost:3000/api/context/" + id);
     router.push("/context/ContextList");
+    }catch(error){
+      toast.error(error.response.data.message);
+    }
+    
   };
   return (
     <MainLayout>

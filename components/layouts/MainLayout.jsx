@@ -1,16 +1,19 @@
 
+import { ToastContainer } from "react-toastify";
 import { Navbar } from "../Navbar";
 
 
 export const MainLayout = ({ children }) => {
     return (
+      <>
+      <Navbar/>
 
         <div className="bg-gray-100 h-screen p-10">
-            <Navbar/>
           <div className="container mx-auto h-full">
           {children}
           </div>
         </div>
-        
+        <ToastContainer/>
+        </>
       )
 }

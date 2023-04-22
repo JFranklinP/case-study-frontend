@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import {toast} from "react-toastify"
 
 export  function ContextForm() {
   const router = useRouter();
@@ -12,19 +13,26 @@ export  function ContextForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (router.query.id) {
-      const res = await axios.put(
-        "http://localhost:3000/api/context/" + router.query.id,
-        context
-      );
-      router.push("../ContextList");
-    } else {
-      const res = await axios.post(
-        "http://localhost:3000/api/context/",
-        context
-      );
-      router.push("/context/ContextList");
+    try{
+      if (router.query.id) {
+        const res = await axios.put(
+          "http://localhost:3000/api/context/" + router.query.id,
+          context
+        );
+        toast.success("Contexto Actualizado");
+        router.push("../ContextList");
+      } else {
+        const res = await axios.post(
+          "http://localhost:3000/api/context/",
+          context
+        );
+        toast.success("Contexto Creado");
+        router.push("/context/ContextList");
+      }
+    }catch(error){
+      toast.error(error.response.data.message);
     }
+
   };
 
   const handleChange = (e) => {
