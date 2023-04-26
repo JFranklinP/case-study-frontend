@@ -19,15 +19,17 @@ export  function ContextForm() {
           "http://localhost:3000/api/context/" + router.query.id,
           context
         );
-        toast.success("Contexto Actualizado");
+       
         router.push("../ContextList");
+        toast.success("Contexto Actualizado");
       } else {
         const res = await axios.post(
           "http://localhost:3000/api/context/",
           context
         );
-        toast.success("Contexto Creado");
+        
         router.push("/context/ContextList");
+        toast.success("Contexto Creado");
       }
     }catch(error){
       toast.error(error.response.data.message);
@@ -50,7 +52,7 @@ export  function ContextForm() {
     if (router.query.id) {
       getContext();
     }
-  }, []);
+  }, [router.query.id]);
 
   return (
     <div className="w-full max-w-xs">

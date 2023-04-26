@@ -9,7 +9,8 @@ function ContextView({ context }) {
   const router = useRouter();
   const handleDelete = async (id) => {
     try{
-      const res = await axios.delete("http://localhost:3000/api/context/" + id);
+      const res = await axios.delete("http://localhost:3000/api/context/" + id)
+      toast.success("Contexto Borrado");
     router.push("/context/ContextList");
     }catch(error){
       toast.error(error.response.data.message);
@@ -30,7 +31,7 @@ function ContextView({ context }) {
         Editar
       </button>
       <button
-        className="bg-red-500 rounded hover:bg-red-700 px-3 py-2 ml-3 mt-3"
+        className="bg-blue-500 rounded hover:bg-blue-700 px-3 py-2 ml-3 mt-3"
         onClick={() => handleDelete(context.id)}
       >
         Eliminar

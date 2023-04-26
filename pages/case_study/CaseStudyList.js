@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { MainLayout } from "../../components/layouts/MainLayout";
 import ContextCard from "../../components/cards/ContextCard";
+import 
 
 function ContextList({ contexts }) {
  
@@ -31,6 +32,7 @@ function ContextList({ contexts }) {
     </MainLayout>
   );
 }
+
 export const getServerSideProps = async (context) => {
   const res = await axios.get("http://localhost:3000/api/context");
   return {
