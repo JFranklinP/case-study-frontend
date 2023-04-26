@@ -1,12 +1,12 @@
 import React from "react";
 import {MainLayout} from "../../components/layouts/MainLayout";
-import {ContextForm} from "../../components/forms/ContextForm";
+import {CaseStudyForm} from "../../components/forms/CaseStudyForm";
 
-export default function ContextFPage() {
+export default function CaseStudyFPage() {
   return (
     <MainLayout>
       <div className="grid place-items-center h-5/6">
-        <ContextForm />
+        <CaseStudyForm />
       </div>
     </MainLayout>
   );

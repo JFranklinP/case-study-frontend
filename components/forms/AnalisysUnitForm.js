@@ -69,7 +69,7 @@ export  function AnalysisUnitForm() {
             type="text"
             id="name"
             name="name"
-            placeholder={analysis_unit.name}
+            value={analysis_unit.name}
             required
             onChange={handleChange}
             className="shadow appearance-none w-full  border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -85,7 +85,7 @@ export  function AnalysisUnitForm() {
           </label>
           <textarea
             name="description"
-            placeholder={analysis_unit.description}
+            value={analysis_unit.description}
             rows={2}
             onChange={handleChange}
             className="shadow border rounded py-2 px-3 text-gray-700"

@@ -71,7 +71,7 @@ export  function ContextForm() {
             type="text"
             id="name"
             name="name"
-            placeholder={context.name}
+            value={context.name}
             required
             onChange={handleChange}
             className="shadow appearance-none w-full  border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -87,7 +87,7 @@ export  function ContextForm() {
           </label>
           <textarea
             name="description"
-            placeholder={context.description}
+            value={context.description}
             rows={2}
             onChange={handleChange}
             className="shadow border rounded py-2 px-3 text-gray-700"

@@ -1,12 +1,12 @@
 import React from "react";
 import {MainLayout} from "../../components/layouts/MainLayout";
-import {ContextForm} from "../../components/forms/ContextForm";
+import {AnalisysUnitForm} from "../../components/forms/AnalisysUnitForm";
 
-export default function ContextFPage() {
+export default function AnalisysUnitFPage() {
   return (
     <MainLayout>
       <div className="grid place-items-center h-5/6">
-        <ContextForm />
+        <AnalisysUnitForm />
       </div>
     </MainLayout>
   );

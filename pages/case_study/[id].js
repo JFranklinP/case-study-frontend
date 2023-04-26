@@ -5,12 +5,12 @@ import { useRouter } from "next/router";
 import {toast} from "react-toastify"
 
 
-function ContextView({ context }) {
+function CaseStudyView({ case_study }) {
   const router = useRouter();
   const handleDelete = async (id) => {
     try{
-      const res = await axios.delete("http://localhost:3000/api/context/" + id);
-    router.push("/context/ContextList");
+      const res = await axios.delete("http://localhost:3000/api/case-study/" + id);
+    router.push("/case_study/CaseStudyList");
     }catch(error){
       toast.error(error.response.data.message);
     }
@@ -20,34 +20,34 @@ function ContextView({ context }) {
     <MainLayout>
       
       <div className="border border-gray-200 shadow-md p-6 mt-6 mb-3" >
-        <h1>{context.name}</h1>
-        <p>{context.description}</p>
+        <h1>{case_study.name}</h1>
+        <p>{case_study.description}</p>
       </div>
       <button
         className="bg-gray-500 rounded hover:bg-gray-700 px-3 py-2 mr-3 mt-3"
-        onClick={() => router.push("/context/edit/" + context.id)}
+        onClick={() => router.push("/case_study/edit/" + case_study.id)}
       >
         Editar
       </button>
       <button
         className="bg-red-500 rounded hover:bg-red-700 px-3 py-2 ml-3 mt-3"
-        onClick={() => handleDelete(context.id)}
+        onClick={() => handleDelete(case_study.id)}
       >
         Eliminar
       </button>
     </MainLayout>
   );
 }
-export const getServerSideProps = async (contexts) => {
-  const { data: context } = await axios.get(
-    "http://localhost:3000/api/context/" + contexts.query.id
+export const getServerSideProps = async (case_studys) => {
+  const { data: case_study } = await axios.get(
+    "http://localhost:3000/api/case-study/" + case_studys.query.id
   );
 
   return {
     props: {
-      context,
+      case_study,
     },
   };
 };
 
-export default ContextView;
+export default CaseStudyView;

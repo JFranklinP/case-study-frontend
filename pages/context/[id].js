@@ -10,8 +10,9 @@ function ContextView({ context }) {
   const handleDelete = async (id) => {
     try{
       const res = await axios.delete("http://localhost:3000/api/context/" + id)
-      toast.success("Contexto Borrado");
+      
     router.push("/context/ContextList");
+    toast.success("Contexto Borrado");
     }catch(error){
       toast.error(error.response.data.message);
     }

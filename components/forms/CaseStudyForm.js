@@ -19,8 +19,9 @@ export  function CaseStudyForm() {
           "http://localhost:3000/api/case-study/" + router.query.id,
           case_study
         );
-        toast.success("Estudio de caso Actualizado");
+       
         router.push("../CaseStudyList");
+        toast.success("Estudio de caso Actualizado");
       } else {
         const res = await axios.post(
           "http://localhost:3000/api/case-study/",
@@ -69,7 +70,7 @@ export  function CaseStudyForm() {
             type="text"
             id="name"
             name="name"
-            placeholder={case_study.name}
+            value={case_study.name}
             required
             onChange={handleChange}
             className="shadow appearance-none w-full  border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -85,7 +86,7 @@ export  function CaseStudyForm() {
           </label>
           <textarea
             name="description"
-            placeholder={case_study.description}
+            value={case_study.description}
             rows={2}
             onChange={handleChange}
             className="shadow border rounded py-2 px-3 text-gray-700"

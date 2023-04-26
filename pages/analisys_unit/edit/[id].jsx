@@ -1,4 +1,4 @@
-import Form from '../../../components/forms/AnalisysUnitForm'
+import Form from '../AnalisysUnitF'
 
 
 export default Form

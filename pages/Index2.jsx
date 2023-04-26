@@ -10,10 +10,11 @@ import {
   Tabs,
   TextField,
 } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Table from '../components/Table';
 import useToggle from '../components/useToggle';
 import { Add, Delete, Visibility } from '@mui/icons-material';
+import axios from 'axios';
 
 function UAs({ ctx }) {
   const [uas, setUas] = useState([]);
@@ -74,6 +75,7 @@ function UAs({ ctx }) {
 
 export default function Index() {
   const [cases, setCases] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
   const [openC, toggleC] = useToggle();
   const [openT, toggleT] = useToggle();
   const [value, setValue] = useState();
@@ -81,14 +83,25 @@ export default function Index() {
   const [tab, setTab] = useState(0);
   
   
-  
+  useEffect(() => {
+    async function fetchCases() {
+      const response = await axios.get("http://localhost:3000/api/context");
+      setCases(response.data);
+    }
+    fetchCases();
+  }, []);
+
   const handleChange = (event) => {
     setValue(event.target.value);
   }
+  const handleItemClick = (item) => {
+    setSelectedItems([...selectedItems, item]);
+  }
+
 
   const columns = [
     { title: 'Nombre', key: 'name' },
-    { title: 'Descripción', key: 'desc' },
+    { title: 'Descripción', key: 'description' },
     {
       title: 'Acciones',
       render: (obj) => <UAs ctx={obj} />,
@@ -116,6 +129,7 @@ export default function Index() {
       </Tabs>
       <Table
         actions={
+
           <IconButton onClick={toggleC}>
             <Add />
           </IconButton>
@@ -124,7 +138,7 @@ export default function Index() {
         data={cases}
         title='Listado de contextos'
       />
-      <Button variant='contained' className='px-3 py-3'>Crear</Button>
+      <Button variant=''>Crear</Button>
       <Dialog open={openC} onClose={toggleC}>
         <form>
         <DialogTitle>Crear nuevo contexto</DialogTitle>
@@ -132,7 +146,18 @@ export default function Index() {
           <Stack spacing={1}>
             <TextField label='Nombre' />
             <TextField label='Descripcion' />
+
           </Stack>
+          <table>
+        <tbody>
+          {cases.map((item) => (
+            <tr key={item.id} onClick={() => handleItemClick(item)}>
+              
+              <td>{item.name}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleC} variant='contained'>

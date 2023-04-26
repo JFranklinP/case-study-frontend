@@ -25,7 +25,7 @@ function ContextList({ contexts }) {
        <div className="mg-3 mt-4 mb-3 p-4">
     <Link className="bg-blue-500 hover:bg-blue-700 mg-2 px-2 py-2 font-bold rounded text-white " href="/context/ContextF">Nuevo</Link>
   </div>
-      <div className="grid gap-4 grid-cols-1 md: grid-cols-2">
+      <div className="grid gap-4  md: grid-cols-2">
         {renderContexts()}
       </div>
     </MainLayout>
