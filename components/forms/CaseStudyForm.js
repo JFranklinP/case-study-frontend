@@ -13,28 +13,24 @@ export  function CaseStudyForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try{
-      if (router.query.id) {
-        const res = await axios.put(
-          "http://localhost:3000/api/case-study/" + router.query.id,
-          case_study
-        );
+    //try{
+    //  if (router.query.id) {
+    //    const res = await axios.put(
+    //      "http://localhost:3000/api/case-study/" + router.query.id,
+     //     case_study
+     //   );
        
-        router.push("../CaseStudyList");
-        toast.success("Estudio de caso Actualizado");
-      } else {
-        const res = await axios.post(
-          "http://localhost:3000/api/case-study/",
-          case_study
-        );
-        toast.success("Estudio de caso Creado");
-        router.push("/case_study/CaseStudyList");
+      //  router.push("../CaseStudyList");
+      //  toast.success("Estudio de caso Actualizado");
+      //} else {
+        const queryString = querystring.stringify(data);
+        router.push(`/Index2?${queryString}`);
       }
-    }catch(error){
-      toast.error(error.response.data.message);
-    }
+  //  }catch(error){
+   //   toast.error();
+  //  }
 
-  };
+  //};
 
   const handleChange = (e) => {
     console.log(e.target.name);

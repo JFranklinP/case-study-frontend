@@ -50,7 +50,7 @@ export  function SystemForm() {
     if (router.query.id) {
       getSystem();
     }
-  }, []);
+  }, [ router.query.id]);
 
   return (
     <div className="w-full max-w-xs">
