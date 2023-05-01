@@ -2,6 +2,7 @@
 import { Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
 import {
   Button,
+  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
@@ -13,44 +14,41 @@ import {
   TextField,
 } from '@mui/material';
 import { useState, useEffect } from 'react';
-import Table2 from '../components/Table';
-import useToggle from '../components/useToggle';
-import { Add, Delete, Visibility } from '@mui/icons-material';
+//import Table2 from '../Table';
+import useToggle from '../useToggle';
+import { Add, Check, CheckBox, Delete, Visibility } from '@mui/icons-material';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
 
-export default function Contexts ({year}){
+export  function Contexts ({year,contextList,handleChange}){
+    const [cases, setCases] = useState([]);
     const  [contexts, setContexts] = useState([]);
     const [openC, toggleC] = useToggle();
     const [open2, toggle2] = useToggle();
 
-    const columns = [
-        { title: 'Nombre', key: 'name' },
-        { title: 'Descripción', key: 'description' },
-        {
-            title: 'Añadir',
-           // render: (obj) => <UAs ctx={obj} />,
-          },
-      ];
-    
-
-    const handleContextClick = (event, row) => {
-        const isSelected = contexts.find(selectedRow => selectedRow.id === row.id);
-        if (!isSelected) {
-          setContexts([...contexts, row]);
-          contexts.push({id,year})
-        } else {
-          //setCases(cases.filter(selectedRow => selectedRow.id !== row.id));
+    useEffect(() => {
+        console.log(year);
+        async function fetchCases() {
+          const response = await axios.get("http://localhost:3000/api/context");
+          setCases(response.data);
         }
+        fetchCases();
+      }, [year]);
+      
+    
+      const handleC = () => {
+        setCases((c) => [...c, { name: 'Prueba', desc: 'Descripcion' }]);
+        toggleC();
       };
 
       return(
         <>
-        <IconButton onClick={toggleC}>
+        <IconButton   onClick={toggleC}>
         <Add />
       </IconButton>
       <Dialog open={openC} onClose={toggleC}>
+
       <Table>
       <TableHead>
         <TableRow>
@@ -60,12 +58,22 @@ export default function Contexts ({year}){
       </TableHead>
       <TableBody>
         {cases.map((row) => (
-          <TableRow key={row.id} onClick={(event) => handleContextClick(event, row)}>
+          <TableRow key={row.id} >
             <TableCell>{row.name}</TableCell>
             <TableCell>{row.description}</TableCell>
-            <IconButton onClick={(event) => handleContextClick(event, row)}>
+            <TableCell>
+            <IconButton onClick={(event) => handleChange(event, row)}>
             <Add />
           </IconButton>
+         
+          
+            </TableCell>
+            <TableCell>
+            <Checkbox checked={contextList.some(ctx=>ctx.id===row.id )}
+            onChange={(event) => handleChange(event, row)}
+            inputProps={{ 'aria-label': 'Seleccionar Item' }} />
+            </TableCell>
+            
 
           </TableRow>
         ))}
