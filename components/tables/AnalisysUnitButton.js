@@ -112,7 +112,7 @@ export function UAs({ ctx, year, handleChange, aus}) {
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.description}</TableCell>
               <TableCell>
-            <Checkbox checked={aus.includes(row)}
+            <Checkbox checked={showAus.some(au=>au.id===row.id )}
             onChange={(event) => handleChange(event, row,ctx)}
             inputProps={{ 'aria-label': 'Seleccionar Item' }} />
             </TableCell>

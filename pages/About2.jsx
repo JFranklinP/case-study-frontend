@@ -1,5 +1,5 @@
 import { Paper, Stack, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import Carousel from 'react-material-ui-carousel';
 const caseStudy={
 
@@ -43,7 +43,55 @@ const contextos = [
   { name: 'Área de proceso Gestión de la Documentación', uas: ['UA17', 'UA18'], year: 2022 },
 ];
 
-function Item({ year }) {
+function Item({ year,caseStudy }) {
+  
+  const  [contexts, setContexts] = useState([]);
+  const [contextsBd,setContextsBd]=useState([]);
+  const  [aus, setAus] = useState([]);
+  const  [ausBd, setAusBd] = useState([]);
+
+  useEffect(() => {
+    async function fetchCase() {
+      const response = await axios.get("http://localhost:3000/api/context"+id);
+      setCaseStudy(response.data);
+    }
+    fetchCase();
+  }, []);
+
+  useEffect(() => {
+    async function fetchCases() {
+      const response = await axios.get("http://localhost:3000/api/context");
+      setContextsBd(response.data);
+    }
+    fetchCases();
+  }, []);
+  useEffect(() => {
+    const filteredElements = contextsBd.filter(contextBd => {
+      return contexts.some(context => {
+        return (contextBd.id === context.id && context.year===year );
+      });
+    });
+    setContexts(filteredElements);
+  }, [contexts, contextsBd,year]);
+
+  useEffect(() => {
+    async function fetchCases() {
+      const response = await axios.get("http://localhost:3000/api/analysis-unit");
+      setAusBd(response.data);
+    }
+    fetchCases();
+  }, []);
+
+  
+  useEffect(() => {
+    const filteredElements = ausBd.filter(auBd => {
+      return aus.some(au => {
+        return (auBd.id === au.id && au.year==year && au.contextId==ctx.id);
+      });
+    });
+    setAus(filteredElements);
+  }, [aus, ausBd,year,ctx.id]);
+  
   return (
     <Stack spacing={1} className=''>
       <Typography variant='h4' className='text-center'>{year}</Typography>
@@ -74,18 +122,16 @@ function Item({ year }) {
 }
 
 export default function About() {
+  const [case_study, setCaseStudy] = useState({})
   const [year, setYear] = useState(2020);
 
   return (
     <Stack spacing={1} className='p-7'>
-      <Typography  variant='h6'>Proyectos de bus de servicios empresariales</Typography>
-      <Typography variant='body1'>Este artículo presenta un estudio de caso en el contexto de tres áreas de 
-      procesos de la Empresa Laboratorios Farmacéuticos AICA. El estudio interviene 97 flujos de integración desarrollados con tecnología ESB,
-como una alternativa tecnológica que permite crear una capa de virtualización, que brinda acceso a la información integrada en tiempo real, y facilita el proceso de análisis y toma de decisiones en diferentes
-niveles. </Typography>
+      <Typography  variant='h6'>{caseStudy.name}</Typography>
+      <Typography variant='body1'>{caseStudy.description} </Typography>
       <Carousel>
         {[2020, 2021, 2022].map((y) => (
-          <Item key={y} year={year} />
+          <Item key={y} year={year} caseStudy={caseStudy} />
         ))}
       </Carousel>
     </Stack>

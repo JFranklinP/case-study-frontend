@@ -20,7 +20,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import {Contexts} from '../components/tables/ContextTable';
 import {UAs} from '../components/tables/AnalisysUnitButton'
-
+import {toast} from "react-toastify"
   
 
 
@@ -77,9 +77,7 @@ export default function Index() {
     }
     fetchCases();
   }, []);
-  const handleContextBd=()=>{
-   
-  }
+
 
   useEffect(() => {
     const filteredElements = contextsBd.filter(contextBd => {
@@ -98,12 +96,9 @@ export default function Index() {
         id:row.id,
         year :selectedYear
       }
-      
       setContexts([...contexts, contextToAdd]);
-      
-      
     } else {
-      setCases(cases.filter(selectedRow => selectedRow.id !== row.id));
+      setContexts(contexts.filter(selectedRow => selectedRow.id !== row.id));
     }
   };
 
@@ -132,7 +127,7 @@ export default function Index() {
   const handleChange = (e) => {
     console.log(e.target.name);
     const { name, value } = e.target;
-    setContext({ ...context, [name]: value });
+    setCaseStudy({ ...case_study, [name]: value });
   };
 
   const columns = [
@@ -144,18 +139,33 @@ export default function Index() {
     },
   ];
 
-  const handleC = () => {
-    setCases((c) => [...c, { name: 'Prueba', desc: 'Descripcion' }]);
-    toggleC();
-  };
-  const [context, setContext] = useState({
-    name: "",
-    description: "",
-  });
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const YearsDto=[]
+    for (const year of years){
+      const yearDto={
+        year,
+        contexts: []
+      }
+      for(const c of  contexts.filter(c=> c.year === year)){
+        yearDto.contexts.push({
+          id: c.id,
+          aus:aus.filter((ua)=>ua.year===year && ua.contextId===c.id)
+          .map((ua)=>ua.id),
+          systems:[1]
+        })
+      }
+      YearsDto.push(yearDto)
+    }
+    const caseToAdd={
+      name: case_study.name,
+      description: case_study.description,
+      commit_date: case_study.create_date,
+      end_date: case_study.end_date,
+      years : YearsDto
+    }
     try{
       if (router.query.id) {
         const res = await axios.put(
@@ -163,15 +173,15 @@ export default function Index() {
           case_study
         );
        
-        router.push("../CaseStudytList");
+       // router.push("../CaseStudytList");
         toast.success("Estudio de caso Actualizado");
       } else {
         const res = await axios.post(
           "http://localhost:3000/api/case-study/",
-          case_study
+          caseToAdd
         );
         
-        router.push("/case_study/CaseStudytList");
+       // router.push("/case_study/CaseStudytList");
         toast.success("Estudio de caso Creado");
       }
     }catch(error){
