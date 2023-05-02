@@ -19,26 +19,27 @@ import useToggle from '../useToggle';
 import { Add, Check, CheckBox, Delete, Visibility } from '@mui/icons-material';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-
+import {toast} from "react-toastify"
 
 export  function Contexts ({year,contextList,handleChange}){
     const [cases, setCases] = useState([]);
     const  [contexts, setContexts] = useState([]);
     const [openC, toggleC] = useToggle();
     const [open2, toggle2] = useToggle();
+    const [shouldFetchData, setShouldFetchData] = useState(false);
 
     useEffect(() => {
-        console.log(year);
+        
         async function fetchCases() {
           const response = await axios.get("http://localhost:3000/api/context");
           setCases(response.data);
         }
         fetchCases();
-      }, [year]);
+      }, [shouldFetchData]);
 
       const [context, setContext] = useState({
         name: "",
-        description: "",
+        description: ""
       });
       const handleSubmit = async (e) => {
         e.preventDefault();
@@ -48,7 +49,8 @@ export  function Contexts ({year,contextList,handleChange}){
               "http://localhost:3000/api/context/",
               context
             );
-            toggleC();
+            setShouldFetchData(!shouldFetchData);
+            toggle2();
             toast.success("Contexto Creado");
           
         }catch(error){
@@ -82,6 +84,11 @@ export  function Contexts ({year,contextList,handleChange}){
         <TableRow>
           <TableCell>Nombre</TableCell>
           <TableCell>Descripcion</TableCell>
+          <TableCell>
+          <IconButton onClick={toggle2}>
+            <Add />
+          </IconButton>
+          </TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -90,39 +97,29 @@ export  function Contexts ({year,contextList,handleChange}){
             <TableCell>{row.name}</TableCell>
             <TableCell>{row.description}</TableCell>
             <TableCell>
-            <IconButton onClick={(event) => handleChange(event, row)}>
-            <Add />
-          </IconButton>
-         
-          
-            </TableCell>
-            <TableCell>
             <Checkbox checked={contextList.some(ctx=>ctx.id===row.id )}
             onChange={(event) => handleChange(event, row)}
             inputProps={{ 'aria-label': 'Seleccionar Item' }} />
             </TableCell>
-            
-
           </TableRow>
         ))}
       </TableBody>
     </Table>
-      <IconButton onClick={toggle2}>
-            <Add />
-          </IconButton>
+      
       <Dialog open={open2} onClose={toggle2}>
         <DialogTitle>Crear nuevo contexto</DialogTitle>
         <DialogContent>
           <Stack spacing={1}>
-            <TextField label='Nombre' onChange={handleC} />
-            <TextField label='Descripcion' onChange={handleC} />
+            <TextField label='Nombre' name='name' id='name' onChange={handleC} />
+            <TextField label='Descripcion' name='description' id='description' onChange={handleC} />
 
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleSubmit} variant='contained'>
+          <Button onClick={handleSubmit} variant='contained' className='bg-blue-500'>
             Crear
           </Button>
+          <Button onClick={toggle2} variant='contained' className='bg-blue-500'>Cerrar</Button>
         </DialogActions>
       </Dialog>
       </Dialog>

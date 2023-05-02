@@ -11,6 +11,7 @@ import {
   Tab,
   Tabs,
   TextField,
+  
 } from '@mui/material';
 import { useState, useEffect } from 'react';
 import Table2 from '../components/Table';
@@ -211,7 +212,8 @@ export default function Index() {
       <label className=' pl-3'>Fecha de inicio </label>
       <TextField type='date' id='create_date' name='create_date'  onChange={handleChange} />
       <label className=' pl-3'>Fecha fin</label>
-      <TextField type='date'  id='end_date' name='end_date' onChange={handleChange} />
+      <TextField type='date'  id='end_date' name='end_date'  onChange={handleChange} />
+    
 
       <Button onClick={toggleT}> definir</Button>
   

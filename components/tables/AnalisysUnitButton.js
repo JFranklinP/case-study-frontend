@@ -13,6 +13,7 @@ import {
   Tab,
   Tabs,
   TextField,
+
 } from '@mui/material';
 import { useState, useEffect } from 'react';
 import Table2 from '../Table';
@@ -20,6 +21,7 @@ import useToggle from '../useToggle';
 import { Add, Delete, Visibility } from '@mui/icons-material';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import {toast} from "react-toastify"
 
 
 
@@ -28,10 +30,44 @@ export function UAs({ ctx, year, handleChange, aus}) {
     const [openC, toggleC] = useToggle();
     const [open2, toggle2] = useToggle();
     const [open3, toggle3] = useToggle();
-
+    const [shouldFetchData, setShouldFetchData] = useState(false);
   
     const [ausBd,setAusBd]= useState([]);
     const [showAus,setShowAus]= useState([]);
+    const [analysis_unit, setAnalysisUnit] = useState({
+      name: "",
+      description: ""
+    });
+    useEffect(() => {
+      async function fetchCases() {
+        const response = await axios.get("http://localhost:3000/api/analysis-unit");
+        setAusBd(response.data);
+      }
+      fetchCases();
+    }, [shouldFetchData]); 
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+  
+      try{
+          const res = await axios.post(
+            "http://localhost:3000/api/analysis-unit/",
+            analysis_unit
+          );
+          setShouldFetchData(!shouldFetchData);
+          toast.success("Unidad de Análisis Creada");
+          toggle2();
+          
+      }catch(error){
+        toast.error(error.response.data.message);
+      }
+    };
+  
+    const handleC = (e) => {
+      console.log(e.target.name);
+      const { name, value } = e.target;
+      setAnalysisUnit({ ...analysis_unit, [name]: value });
+    };
 
 
     const columns = [
@@ -46,15 +82,8 @@ export function UAs({ ctx, year, handleChange, aus}) {
         setAus(aus.filter(selectedRow => selectedRow.id !== row.id));
       }
     };
-    useEffect(() => {
-        async function fetchCases() {
-          const response = await axios.get("http://localhost:3000/api/analysis-unit");
-          setAusBd(response.data);
-        }
-        fetchCases();
-      }, []);
-      const handleAusBd=()=>{
-      }
+    
+      
       useEffect(() => {
         const filteredElements = ausBd.filter(auBd => {
           return aus.some(au => {
@@ -65,10 +94,6 @@ export function UAs({ ctx, year, handleChange, aus}) {
       }, [aus, ausBd,year,ctx.id]);
     
   
-    const handleC = () => {
-      toggle2();
-      setUas((ua) => [...ua, { name: 'Trabajadores', desc: 'Personal que trabaja en el área' }]);
-    };
   
     return (
       <>
@@ -124,14 +149,15 @@ export function UAs({ ctx, year, handleChange, aus}) {
               <DialogTitle>Crear unidad de análisis</DialogTitle>
               <DialogContent>
                 <Stack spacing={1}>
-                  <TextField label='Nombre' />
-                  <TextField label='Descripción' />
+                <TextField label='Nombre' name='name' id='name' onChange={handleC} />
+                <TextField label='Descripcion' name='description' id='description' onChange={handleC} />
                 </Stack>
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleC} variant='contained'>
-                  Crear
-                </Button>
+              <Button onClick={handleSubmit} variant='contained' className='bg-blue-500'>
+            Crear
+          </Button>
+          <Button onClick={toggle2} variant='contained' className='bg-blue-500'>Cerrar</Button>
               </DialogActions>
             </Dialog>
         </Dialog>
