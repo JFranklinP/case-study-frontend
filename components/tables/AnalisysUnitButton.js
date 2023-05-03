@@ -74,15 +74,7 @@ export function UAs({ ctx, year, handleChange, aus}) {
       { title: 'Nombre', key: 'name' },
       { title: 'Descripción', key: 'description' },
     ];
-    const handleAusClick = (event, row) => {
-      const isSelected = aus.find(selectedRow => selectedRow.id === row.id);
-      if (!isSelected) {
-        setAus([...aus, row]);
-      } else {
-        setAus(aus.filter(selectedRow => selectedRow.id !== row.id));
-      }
-    };
-    
+
       
       useEffect(() => {
         const filteredElements = ausBd.filter(auBd => {

@@ -27,19 +27,19 @@ function CaseStudyView({ case_study }) {
       </div>
       <button
         className="bg-gray-500 rounded hover:bg-gray-700 px-3 py-2 mr-3 mt-3"
-        onClick={() => router.push("/case_study/view/" + case_study.id)}
+        onClick={() => router.push("/case_study/view/" + router.query.id)}
       >
         Visualizar
       </button>
       <button
         className="bg-gray-500 rounded hover:bg-gray-700 px-3 py-2 mr-3 mt-3"
-        onClick={() => router.push("/case_study/edit/" + case_study.id)}
+        onClick={() => router.push("/case_study/edit/" + router.query.id)}
       >
-        Editar
+        Reconstruir
       </button>
       <button
         className="bg-blue-500 rounded hover:bg-red-700 px-3 py-2 ml-3 mt-3"
-        onClick={() => handleDelete(case_study.id)}
+        onClick={() => handleDelete(router.query.id)}
       >
         Eliminar
       </button>
@@ -53,7 +53,7 @@ export const getServerSideProps = async (case_studys) => {
 
   return {
     props: {
-      case_study,
+      case_study
     },
   };
 };

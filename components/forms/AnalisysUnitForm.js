@@ -3,7 +3,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import {toast} from "react-toastify"
 
-export  function AnalysisUnitForm() {
+export  function AnalisysUnitForm() {
   const router = useRouter();
 
   const [analysis_unit, setAnalysisUnit] = useState({
@@ -20,7 +20,7 @@ export  function AnalysisUnitForm() {
           analysis_unit
         );
         toast.success("Unidad de Análisis Actualizada");
-        router.push("../AnalysisUnitList");
+        router.push("../AnalisysUnitList");
       } else {
         const res = await axios.post(
           "http://localhost:3000/api/analysis-unit/",
@@ -50,7 +50,7 @@ export  function AnalysisUnitForm() {
     if (router.query.id) {
       getAnalysisUnit();
     }
-  }, []);
+  }, [router.query.id]);
 
   return (
     <div className="w-full max-w-xs">

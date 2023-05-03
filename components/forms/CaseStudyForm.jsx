@@ -26,22 +26,12 @@ import {toast} from "react-toastify"
 
 
 export  function CaseStudyForm() {
-  const [cases, setCases] = useState([]);
-  const [selectedItems, setSelectedItems] = useState([]);
-  const [openC, toggleC] = useToggle();
-  const [open2, toggle2] = useToggle();
-  const [openT, toggleT] = useToggle();
-
-  const  [systems, setSystems] = useState([]);
-
-  const  [aus, setAus] = useState([]);
-
-  const  [contexts, setContexts] = useState([]);
+  const [aus, setAus] = useState([]);
+  
+  const [contexts, setContexts] = useState([]);
   const [contextsBd,setContextsBd]=useState([]);
   const [showContexts,setShowContext]= useState([]);
-
   const [years, setYears] = useState([2019]);
-
   const [case_study, setCaseStudy] = useState({
     name: "",
     description: "",
@@ -49,11 +39,30 @@ export  function CaseStudyForm() {
     commit_date: "",
     end_date: ""
   })
+  const [openC, toggleC] = useToggle();
+    const [openT, toggleT] = useToggle();
   const [tab, setTab] = useState(0);
   const router = useRouter();
-  const { name, email } = router.query;
   const selectedYear = years[tab];
-  const [selectedRows, setSelectedRows] = useState([]);
+  const [caseS, setCase] = useState({
+    name: "",
+    description: "",
+    commit_date:"",
+    end_date:""
+  });
+
+  useEffect(() => {
+    const getCase = async () => {
+      const { data } = await axios.get(
+        "http://localhost:3000/api/case-study/ " + router.query.id
+      );
+      setCase({ name: data.name, description: data.description, commit_date: data.commit_date, end_date: data.end_date });
+    };
+    if (router.query.id) {
+      getCase();
+    }
+  }, [router.query.id]);
+ 
 
   const handleAusClick = (event, au,ctx) => {
     const isSelected = aus.find(selectedRow => selectedRow.id === au.id && selectedRow.year===selectedYear && selectedRow.contextId==ctx.id);
@@ -70,7 +79,6 @@ export  function CaseStudyForm() {
     }
   };
 
-  
   useEffect(() => {
     async function fetchCases() {
       const response = await axios.get("http://localhost:3000/api/context");
@@ -103,44 +111,14 @@ export  function CaseStudyForm() {
     }
   };
 
-  const handleYearClick = (event, row) => {
-    const isSelected = selectedRows.find(selectedRow => selectedRow.id === row.id);
-    if (!isSelected) {
-      setSelectedRows([...selectedRows, row]);
 
-    } else {
-      setSelectedRows(selectedRows.filter(selectedRow => selectedRow.id !== row.id));
-    }
-  };
   
-  
-  
-  
-  useEffect(() => {
-    async function fetchCases() {
-      const response = await axios.get("http://localhost:3000/api/context");
-      setCases(response.data);
-    }
-    fetchCases();
-  }, []);
-
 
   const handleChange = (e) => {
     console.log(e.target.name);
     const { name, value } = e.target;
     setCaseStudy({ ...case_study, [name]: value });
   };
-
-  const columns = [
-    { title: 'Nombre', key: 'name' },
-    { title: 'Descripción', key: 'description' },
-    {
-      title: 'Acciones',
-      render: (obj) => <UAs ctx={obj } year={selectedYear} handleChange={handleAusClick} aus={aus} />,
-    },
-  ];
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -167,14 +145,15 @@ export  function CaseStudyForm() {
       end_date: case_study.end_date,
       years : YearsDto
     }
+  
     try{
       if (router.query.id) {
         const res = await axios.put(
           "http://localhost:3000/api/case-study/" + router.query.id,
-          case_study
+          caseToAdd
         );
        
-       // router.push("../CaseStudytList");
+       router.push("../CaseStudyList");
         toast.success("Estudio de caso Actualizado");
       } else {
         const res = await axios.post(
@@ -182,7 +161,7 @@ export  function CaseStudyForm() {
           caseToAdd
         );
         
-       // router.push("/case_study/CaseStudytList");
+       router.push("/case_study/CaseStudyList");
         toast.success("Estudio de caso Creado");
       }
     }catch(error){
@@ -190,8 +169,7 @@ export  function CaseStudyForm() {
     }
 
   };
-
-  useEffect(() => {
+  /*  useEffect(() => {
     const getContext = async () => {
       const { data } = await axios.get(
         "http://localhost:3000/api/context/ " + router.query.id
@@ -201,21 +179,28 @@ export  function CaseStudyForm() {
     if (router.query.id) {
       getContext();
     }
-  }, [router.query.id]);
+  }, [router.query.id]);*/
 
-
+  const columns = [
+    { title: 'Nombre', key: 'name' },
+    { title: 'Descripción', key: 'description' },
+    {
+      title: 'Acciones',
+      render: (obj) => <UAs ctx={obj } year={selectedYear} handleChange={handleAusClick} aus={aus} />,
+    },
+  ];
 
   return (
     <Stack spacing={1}>
-      <TextField fullWidth label='Nombre del estudio de caso' id="name" name="name" onChange={handleChange} />
-      <TextField fullWidth label='Descripción del estudio de caso' id="description" name="description" onChange={handleChange} />
+      <TextField fullWidth label='Nombre del estudio de caso' id="name" name="name"  onChange={handleChange} />
+      <TextField fullWidth label='Descripción del estudio de caso' id="description" name="description"  onChange={handleChange} />
       <label className=' pl-3'>Fecha de inicio </label>
       <TextField type='date' id='create_date' name='create_date'  onChange={handleChange} />
       <label className=' pl-3'>Fecha fin</label>
-      <TextField type='date'  id='end_date' name='end_date'  onChange={handleChange} />
+      <TextField type='date'  id='end_date' name='end_date'   onChange={handleChange} />
     
 
-      <Button onClick={toggleT}> definir</Button>
+      
   
       <Tabs onChange={(ev, newTab) => setTab(newTab)} value={tab} >
         {years.map((y) => (
@@ -232,7 +217,7 @@ export  function CaseStudyForm() {
         data={showContexts}
         title='Listado de contextos'
       />
-      <Button onClick={handleSubmit}>Crear</Button>
+      <Button onClick={handleSubmit}>{router.query.id ? "Reconstruir" : "Añadir"}</Button>
      
     </Stack>
   );
