@@ -27,11 +27,11 @@ import {toast} from "react-toastify"
 
 export  function CaseStudyForm() {
   const [aus, setAus] = useState([]);
-  
   const [contexts, setContexts] = useState([]);
   const [contextsBd,setContextsBd]=useState([]);
   const [showContexts,setShowContext]= useState([]);
-  const [years, setYears] = useState([2019]);
+  const [selectYear, setSelecYear] = useState([]); 
+  const [years, setYears] = useState([2023]);
   const [case_study, setCaseStudy] = useState({
     name: "",
     description: "",
@@ -39,11 +39,11 @@ export  function CaseStudyForm() {
     commit_date: "",
     end_date: ""
   })
-  const [openC, toggleC] = useToggle();
-    const [openT, toggleT] = useToggle();
   const [tab, setTab] = useState(0);
   const router = useRouter();
   const selectedYear = years[tab];
+  const [date, setDate] = useState([]); 
+  
   const [caseS, setCase] = useState({
     name: "",
     description: "",
@@ -98,6 +98,7 @@ export  function CaseStudyForm() {
   }, [contexts, contextsBd,selectedYear]);
 
 
+
   const handleContextClick = (event, row) => {
     const isSelected = (contexts.find(selectedRow => selectedRow.id === row.id && selectedRow.year === selectedYear));
     if (!isSelected) {
@@ -111,8 +112,14 @@ export  function CaseStudyForm() {
     }
   };
 
-
-  
+  const handleDateChangeDate = (event) => {
+    const date = new Date(event.target.value);
+    const year = date.getFullYear();
+    setSelecYear(year);
+   
+ 
+    setDate(event.target.value)
+  };
 
   const handleChange = (e) => {
     console.log(e.target.name);
@@ -141,7 +148,7 @@ export  function CaseStudyForm() {
     const caseToAdd={
       name: case_study.name,
       description: case_study.description,
-      commit_date: case_study.create_date,
+      commit_date: date,
       end_date: case_study.end_date,
       years : YearsDto
     }
@@ -169,17 +176,7 @@ export  function CaseStudyForm() {
     }
 
   };
-  /*  useEffect(() => {
-    const getContext = async () => {
-      const { data } = await axios.get(
-        "http://localhost:3000/api/context/ " + router.query.id
-      );
-      setContext({ name: data.name, description: data.description });
-    };
-    if (router.query.id) {
-      getContext();
-    }
-  }, [router.query.id]);*/
+
 
   const columns = [
     { title: 'Nombre', key: 'name' },
@@ -195,14 +192,11 @@ export  function CaseStudyForm() {
       <TextField fullWidth label='Nombre del estudio de caso' id="name" name="name" required  onChange={handleChange} />
       <TextField fullWidth label='Descripción del estudio de caso' id="description"  name="description"  onChange={handleChange} />
       <label className=' pl-3'>Fecha de inicio </label>
-      <TextField type='date' id='create_date' name='create_date' required  onChange={handleChange} />
+      <TextField type='date' id='create_date' name='create_date' required  onChange={handleDateChangeDate} />
       <label className=' pl-3'>Fecha fin</label>
       <TextField type='date'  id='end_date' name='end_date'   onChange={handleChange} />
-    
 
-      
-  
-      <Tabs onChange={(ev, newTab) => setTab(newTab)} value={tab} >
+      <Tabs  onChange={(ev, newTab) => setTab(newTab)} value={tab} >
         {years.map((y) => (
           <Tab  key={y} label={y} />
         ))}

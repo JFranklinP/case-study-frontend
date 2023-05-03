@@ -104,12 +104,12 @@ export default function CaseStudyView() {
     <Stack spacing={1} className='p-7'>
       <Typography  variant='h6'>{caseStudy.name}</Typography>
       <Typography variant='body1'>{caseStudy.description} </Typography>
-      <Carousel>
+     
         {years.map((y) => (
           
-          <Item key={y} contexts ={contexts} aus={aus} year={year}/>
+          <Item key={y} contexts ={contexts} aus={aus} year={y}/>
         ))}
-      </Carousel>
+     
     </Stack>
   );
 }
