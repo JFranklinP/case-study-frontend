@@ -4,11 +4,11 @@ import Link from "next/link";
 import { MainLayout } from "../../components/layouts/MainLayout";
 import AnalisysUnitCard from "../../components/cards/AnalisysUnitCard";
 
-function AnalisysUnitList({ contexts }) {
+function AnalisysUnitList({ aus }) {
  
   
   const renderAnalisysUnits = () => {
-    if (contexts.length === 0)
+    if (aus.length === 0)
       return (
         <h1 text-center text-bold>
           {" "}
@@ -16,7 +16,7 @@ function AnalisysUnitList({ contexts }) {
         </h1>
       );
 
-    return contexts.map((analisys_unit) => (
+    return aus.map((analisys_unit) => (
       <AnalisysUnitCard key={analisys_unit.id} analisys_unit={analisys_unit} />
     ));
   };
@@ -32,10 +32,10 @@ function AnalisysUnitList({ contexts }) {
   );
 }
 export const getServerSideProps = async (analisys_unit) => {
-  const res = await axios.get("http://localhost:3000/api/analisys-unit");
+  const res = await axios.get("http://localhost:3000/api/analysis-unit");
   return {
     props: {
-      contexts: res.data,
+      aus: res.data,
     },
   };
 };

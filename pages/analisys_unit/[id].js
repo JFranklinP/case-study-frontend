@@ -9,7 +9,7 @@ function AnalisisUnitView({ analisys_unit }) {
   const router = useRouter();
   const handleDelete = async (id) => {
     try{
-      const res = await axios.delete("http://localhost:3000/api/analisys-unit/" + id);
+      const res = await axios.delete("http://localhost:3000/api/analysis-unit/" + id);
     router.push("/analisys_unit/AnalisisUnitList");
     }catch(error){
       toast.error(error.response.data.message);
@@ -40,7 +40,7 @@ function AnalisisUnitView({ analisys_unit }) {
 }
 export const getServerSideProps = async (analisys_units) => {
   const { data: analisys_unit } = await axios.get(
-    "http://localhost:3000/api/analisys-unit/" + analisys_units.query.id
+    "http://localhost:3000/api/analysis-unit/" + analisys_units.query.id
   );
 
   return {

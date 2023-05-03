@@ -14,18 +14,18 @@ import {
   
 } from '@mui/material';
 import { useState, useEffect } from 'react';
-import Table2 from '../components/Table';
-import useToggle from '../components/useToggle';
+import Table2 from '../Table';
+import useToggle from '../useToggle';
 import { Add, Delete, Label, Visibility } from '@mui/icons-material';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import {Contexts} from '../components/tables/ContextTable';
-import {UAs} from '../components/tables/AnalisysUnitButton'
+import {Contexts} from '../tables/ContextTable';
+import {UAs} from '../tables/AnalisysUnitButton'
 import {toast} from "react-toastify"
   
 
 
-export default function Index() {
+export  function CaseStudyForm() {
   const [cases, setCases] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [openC, toggleC] = useToggle();

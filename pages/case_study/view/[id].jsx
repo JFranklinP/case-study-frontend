@@ -78,64 +78,23 @@ function Item({ YearsDto,year}) {
 
 export default function About() {
   const  [caseStudy, setCase] = useState([]);
+  const [contextsBd,setContextsBd]=useState([]);
+  const  [aus, setAus] = useState([]);
+  const  [ausBd, setAusBd] = useState([]);
+  const  [Years, setYears] = useState([]);
   const  [year, setYear] = useState([2020]);
-  const [YearsDto, setYearsDto] = useState([]);
-  const  [contextsBd, setContextsBd] = useState([2020]);
-  const [ausBd, setAusBd] = useState([]);
-  
-
 
   useEffect(() => {
-    async function fetchCase() {
-      const response = await axios.get("http://localhost:3000/api/case-study/"+24);
-      const response2 =  axios.get('http://localhost:3000/api/context');
-      const response3 =  axios.get('http://localhost:3000/api/analysis-unit');
+    async function fetchCase({id}) {
+      const response = await axios.get("http://localhost:3000/api/case-study/"+23);
       setCase(response.data);
-      setContextsBd(response2.data);
-      setAusBd(response3.data);
-
     }
-    fetchCase();
-    try {
-        
-      
+    fetchCase(23);
+  }, []);
 
-      const YearsDto = [];
-for (const year of caseStudy.years) {
-const yearDto = {
-  year,
-  contexts: []
-};
-for (const c of year.contexts) {
-  const aus = [];
-  const matchingContextBD = contextsBd.find(ctx => ctx.id === c.id);
-  if (matchingContextBD) {
-    for (const ausItem of c.aus) {
-      const matchingAusBD = ausBd.find(ua => ua.id === ausItem.id);
-      if (matchingAusBD) {
-        aus.push(matchingAusBD);
-      }
-    }
-    const contextDto={
-      id: matchingContextBD.id,
-      name: matchingContextBD.name,
-      description: matchingContextBD.description,
-      aus: aus}
-    yearDto.contexts.push({ contextDto });
-  }
-}
-YearsDto.push(yearDto);
-}
+  const [YearsDto, setYearsDto] = useState([]);
 
-      setYearsDto(YearsDto);
-    } catch (error) {
-      console.error(error);
-    }
-  }, [ausBd,caseStudy.years,contextsBd]);
-
- 
-
- /* useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         

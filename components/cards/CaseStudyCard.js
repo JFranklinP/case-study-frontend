@@ -8,6 +8,7 @@ export default function CaseStudyCard({case_study}) {
 <div className='border border-gray-200 shadow-md p-6  ml-2 mr-2' >
     <h1 className="font-bold">{case_study.name}</h1>
     <p>{case_study.description}</p>
+   
 
 </div>
 </Link>
