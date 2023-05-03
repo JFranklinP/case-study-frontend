@@ -192,10 +192,10 @@ export  function CaseStudyForm() {
 
   return (
     <Stack spacing={1}>
-      <TextField fullWidth label='Nombre del estudio de caso' id="name" name="name"  onChange={handleChange} />
-      <TextField fullWidth label='Descripción del estudio de caso' id="description" name="description"  onChange={handleChange} />
+      <TextField fullWidth label='Nombre del estudio de caso' id="name" name="name" required  onChange={handleChange} />
+      <TextField fullWidth label='Descripción del estudio de caso' id="description"  name="description"  onChange={handleChange} />
       <label className=' pl-3'>Fecha de inicio </label>
-      <TextField type='date' id='create_date' name='create_date'  onChange={handleChange} />
+      <TextField type='date' id='create_date' name='create_date' required  onChange={handleChange} />
       <label className=' pl-3'>Fecha fin</label>
       <TextField type='date'  id='end_date' name='end_date'   onChange={handleChange} />
     

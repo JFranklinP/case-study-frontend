@@ -25,7 +25,7 @@ function AnalisisUnitView({ analisys_unit }) {
       </div>
       <button
         className="bg-gray-500 rounded hover:bg-gray-700 px-3 py-2 mr-3 mt-3"
-        onClick={() => router.push("/analisys-unit/edit/" + router.query.id)}
+        onClick={() => router.push("/analisys_unit/edit/" + router.query.id)}
       >
         Editar
       </button>
