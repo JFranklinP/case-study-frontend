@@ -31,7 +31,7 @@ export  function CaseStudyForm() {
   const [contextsBd,setContextsBd]=useState([]);
   const [showContexts,setShowContext]= useState([]);
   const [selectYear, setSelecYear] = useState([]); 
-  const [years, setYears] = useState([2023]);
+  const [years, setYears] = useState([]);
   const [case_study, setCaseStudy] = useState({
     name: "",
     description: "",
@@ -116,6 +116,7 @@ export  function CaseStudyForm() {
     const date = new Date(event.target.value);
     const year = date.getFullYear();
     setSelecYear(year);
+    setYears([year])
    
  
     setDate(event.target.value)

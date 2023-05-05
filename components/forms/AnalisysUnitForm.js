@@ -27,7 +27,7 @@ export  function AnalisysUnitForm() {
           analysis_unit
         );
         toast.success("Unidad de Análisis Creada");
-        router.push("/analysis_unit/AnalysisUnitList");
+        router.push("/analisys_unit/AnalisysUnitList");
       }
     }catch(error){
       toast.error(error.response.data.message);
